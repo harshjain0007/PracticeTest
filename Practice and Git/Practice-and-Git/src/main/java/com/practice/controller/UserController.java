@@ -13,6 +13,7 @@ public class UserController {
 
     @Autowired
    private UserService userService;
+    //adjadak
 
     @GetMapping
    public List<User> getAllUsers(){
