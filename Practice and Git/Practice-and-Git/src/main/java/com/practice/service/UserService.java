@@ -7,14 +7,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> findAll(){
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
@@ -22,22 +21,22 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Optional<User> findById(Long id){
+    public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
 
-    public User update(Long id,User user){
-        User usser= userRepository.getUserById(id).get();
-        if(usser != null){
-            usser.setName(user.getName());
-            usser.setEmail(user.getEmail());
-            return userRepository.save(usser);
-        }else {
-            return userRepository.save(user);
-        }
+    public User update(Long id, User user) {
+        return userRepository.findById(id)
+                .map(existingUser -> {
+                    existingUser.setName(user.getName());
+                    existingUser.setEmail(user.getEmail());
+                    return userRepository.save(existingUser);
+                })
+                .orElseGet(() -> userRepository.save(user)); // Handle not found case as needed
     }
 }
+
