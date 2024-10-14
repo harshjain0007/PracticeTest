@@ -13,7 +13,7 @@ public class UserController {
 
     @Autowired
    private UserService userService;
-    //adjadak
+
 
     @GetMapping
    public List<User> getAllUsers(){
@@ -30,6 +30,12 @@ public class UserController {
     @DeleteMapping("{id}")
     public void deleteUser(@PathVariable Long id){
         userService.deleteById(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id,@RequestBody User user){
+        return  ResponseEntity.ok( userService.update(id, user));
+
     }
 
 

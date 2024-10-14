@@ -30,5 +30,14 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-
+    public User update(Long id,User user){
+        User usser= userRepository.getUserById(id).get();
+        if(usser != null){
+            usser.setName(user.getName());
+            usser.setEmail(user.getEmail());
+            return userRepository.save(usser);
+        }else {
+            return userRepository.save(user);
+        }
+    }
 }
